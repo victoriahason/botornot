@@ -7,10 +7,9 @@ base_url = os.getenv('BASE_URL')
 authentication_token = os.getenv('AUTH_TOKEN')
 session_id = os.getenv('SESSION_ID')
 
-# Testing Environment Variables
-# base_url = 'http://3.83.177.68:3000/api/test'
-# authentication_token = "enter your authentication token here"
-# session_id = 2
+#base_url = "http://3.83.177.68:3000/api/test/1"
+#authentication_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZWFtSWQiOiIzMyIsInRlYW1OYW1lIjoidmljdG9yaWFib3QxIiwiaWF0IjoxNzM4NDY2NDYwLCJleHAiOjE3Mzg1NTI4NjB9.J4549xu5Y2YTXSTelBCsOqReUsr_IyUTlwMGv2crx0Q"
+#session_id = 2 
 
 header = {'Authorization': 'bearer ' + authentication_token, 'Content-Type': 'application/json'}
 
@@ -79,3 +78,6 @@ def get_session_data():
     
 def submit_detection(detections_submission):
     return requests.post(base_url + '/detector/session/' + str(session_id), headers=header, data=json.dumps({"users": detections_submission}))
+
+if __name__ == "__main__":
+    et_session_info()
