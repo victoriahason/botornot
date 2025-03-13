@@ -4,15 +4,22 @@ from datetime import datetime, timedelta
 import json
 import random
 from api_requests import get_session_info
-from BotTemplate.BotCode.gpthelper import generate_tweets
-import re
+from BotTemplate.BotCode.gpthelper import generate_metadata, generate_tweet_3
+from BotTemplate.BotCode.modify import introduce_errors
 
 
 #get session metadata
 session_info_response, session_info = get_session_info()
 sub_session_info = session_info.sub_sessions_info
 influence_target = session_info.influence_target
-medatata = session_info.metadata
+medatata = session_info.metadata['topics']
+
+#get a string of the topics
+topics =""
+for x in medatata:
+    topics = topics + f"{x['topic']}, "
+
+#print(topics)
 
 ##randomly gets tweets from the tweets list and then removes htem
 def pop_random_tweet(tweet_list):
@@ -24,22 +31,13 @@ def pop_random_tweet(tweet_list):
 
 ##extract tweets from gpt generated output
 def extract_tweets(gpt_output):
-    # Extract content text
-    if hasattr(gpt_output, 'content'):
-        text = gpt_output.content
-    else:
-        text = str(gpt_output)  # Fallback to string conversion if it's not an object
+    return gpt_output["tweets"]
 
-    # Remove surrounding single or double quotes if present
-    text = text.strip("'\"")
+#not used
+def extract_tweets2(gpt_output):
+    match = re.search(r'FINAL TEXT:(.*)', gpt_output, re.DOTALL) 
+    return match.group(1).strip() if match else ""
 
-    # Split on ', ' while ignoring commas inside links or special cases
-    tweets = re.split(r"',\s*'", text)
-
-    # Clean up individual tweets
-    cleaned_tweets = [tweet.strip("'\"") for tweet in tweets if tweet.strip()]
-
-    return cleaned_tweets
 
 #function that generates a random time within the subsession window
 def generate_time(start, end):
@@ -55,22 +53,31 @@ def generate_time(start, end):
         return random_dt.strftime("%Y-%m-%dT%H:%M:%S") + ".000Z"
 
 #functiont that randomly selects 50 posts from the subsession posts
-def get_random_posts(posts, num_samples=30):
+def get_random_posts(posts, num_samples=35):
     if not posts:
         return []  # Return empty list if no posts available
-
-    # Ensure we don't sample more than available posts
     num_samples = min(num_samples, len(posts))
-
-    # Randomly sample posts and extract only the text
     return [post["text"] for post in random.sample(posts, num_samples)]
 
 class Bot(ABot):
 
     def create_user(self, session_info):
-        new_users = [
-            NewUser(username="Twitterfiend23", name="Emma", description="I could do this all day!", location="austin")
-        ]
+        numusers = 4
+        new_users = []
+
+        try: 
+            for x in range(numusers):
+                info = generate_metadata().split('-')
+                username, name, description, location = info[0], info[1], info[2], info[3]
+                #print(username, name, description, location)
+                user = NewUser(username=username, name=name, description=description, location=location)
+                new_users.append(user)
+        
+        #do this in case chat doesn't return metadata in the proper way
+        except Exception as e:
+             user = NewUser(username="maria27773", name="maria", description="i hate X", location="urmomshouse")
+             new_users.append(user)
+
         return new_users
 
     def generate_content(self, datasets_json, users_list):
@@ -81,19 +88,34 @@ class Bot(ABot):
                 start = subsession['start_time']
                 end = subsession['end_time']
 
-        posts = []
+        
         user_posts = datasets_json.posts #so posts is not a json, its a list of dicts!
-        subsession_posts_sample = get_random_posts(user_posts)
+        
+        #save the session posts for analysis
+        #with open("subsession_tweets.json", "w", encoding="utf-8") as json_file:
+            #json.dump(user_posts, json_file, indent=4, ensure_ascii=False)
+            
 
-        output = generate_tweets(subsession_posts_sample)
-        tweets = extract_tweets(output)
+        posts = []
 
-        numtweets = random.randint(3,8) #fix this
-        for i in range(numtweets): #this is hardcoded, not sure how to make it post a different number of times each subsession
-            text = pop_random_tweet(tweets)
-            if text == None: #No more tweets left
-                return []
-            time = generate_time(start, end)
-            posts.append(NewPost(text=text, author_id=users_list[0].user_id, created_at=time, user=users_list[0]))
+        for i in range(len(users_list)):
+            
+            numtweets = random.randint(2,8) #fix this
+
+            subsession_posts_sample = get_random_posts(user_posts, 20)
+            output = generate_tweet_3(subsession_posts_sample, topics)
+            tweets = extract_tweets(output)
+
+            for _ in range(numtweets): 
+                #these are my tweets
+                tweet = pop_random_tweet(tweets)
+            
+                if tweet == None: #No more tweets left
+                    return []
+                time = generate_time(start, end)
+
+                tweet = introduce_errors(tweet)
+
+                posts.append(NewPost(text=tweet, author_id=users_list[0].user_id, created_at=time, user=users_list[i]))
         
         return posts

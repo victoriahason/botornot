@@ -7,8 +7,8 @@ base_url = os.getenv('BASE_URL')
 authentication_token = os.getenv('AUTH_TOKEN')
 session_id = os.getenv('SESSION_ID')
 
-#base_url = "http://3.92.68.65:3000/api/test/5"
-#authentication_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZWFtSWQiOiIzMyIsInRlYW1OYW1lIjoidmljdG9yaWFib3QxIiwiaWF0IjoxNzQwNjAwNDU5LCJleHAiOjE3NDA2ODY4NTl9.VDAF6FbmgslQa3-qKQdJSWZLhnqYEuc3PW4tmwiDkYc"
+#base_url = "http://3.92.68.65:3000/api/test/10"
+#authentication_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZWFtSWQiOiIzMyIsInRlYW1OYW1lIjoidmljdG9yaWFib3QxIiwiaWF0IjoxNzQxODk1MTY3LCJleHAiOjE3NDE5ODE1Njd9.pYBp5wxWfvYc7mMEMl9FLQ8a4kj7SCoNNLeikVAtW0o"
 #session_id = 1
 
 header = {'Authorization': 'bearer ' + authentication_token, 'Content-Type': 'application/json'}
