@@ -3,10 +3,10 @@ import os
 import json
 
 
-#client = OpenAI(api_key=os.getenv("ENV_VAR1"))
+client = OpenAI(api_key=os.getenv("ENV_VAR1"))
 
 #for testing
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+#client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 messages_metadata = [

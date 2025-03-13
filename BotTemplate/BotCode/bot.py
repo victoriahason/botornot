@@ -98,7 +98,7 @@ class Bot(ABot):
 
         posts = []
 
-        for i in range(len(users_list)):
+        for h in range(len(users_list)):
             
             numtweets = random.randint(2,8) #fix this
 
@@ -116,6 +116,8 @@ class Bot(ABot):
 
                 tweet = introduce_errors(tweet)
 
-                posts.append(NewPost(text=tweet, author_id=users_list[0].user_id, created_at=time, user=users_list[i]))
+                posts.append(NewPost(text=tweet, author_id=users_list[h].user_id, created_at=time, user=users_list[h]))
         
         return posts
+
+
