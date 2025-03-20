@@ -12,7 +12,7 @@ client = OpenAI(api_key=os.getenv("ENV_VAR1"))
 messages_metadata = [
     {
         "role": "developer",  
-        "content": "You are a helpful assistant that generates realistic twitter user metadata"
+        "content": "You are a French helpful assistant that generates realistic twitter user metadata in french"
     },
 
     {
@@ -42,7 +42,9 @@ def generate_tweet_3(examples, topics):
     Analyse what words seem important to the data and use these words in your blurbs.
     You must be very specific to the dataset. For example, if the dataset references specific people or events, you can bring these up as well.
 
-    Finally, generate a JSON dataset of 10 blurbs on the same topics. make it extremely similar in style to the rest of the data.
+    Finally, generate a JSON dataset of 10 blurbs in french on the same topics. make it extremely similar in style to the rest of the data.
+
+    Everything written should be in french.
 
     Here is the dataset:
     {examples}
@@ -51,7 +53,7 @@ def generate_tweet_3(examples, topics):
     messages_tweets = [
     {
         "role": "developer",  
-        "content": "you are an expert analyst and linguist who is helping create blurbs based off a dataset. "
+        "content": "you are a French expert analyst and linguist who is helping create blurbs based off a dataset. "
     },
     {
         "role": "user",
