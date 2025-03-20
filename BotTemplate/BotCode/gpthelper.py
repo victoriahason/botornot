@@ -42,7 +42,12 @@ def generate_tweet_3(examples, topics):
     Analyse what words seem important to the data and use these words in your blurbs.
     You must be very specific to the dataset. For example, if the dataset references specific people or events, you can bring these up as well.
 
-    Finally, generate a JSON dataset of 10 blurbs on the same topics. make it extremely similar in style to the rest of the data.
+    Finally, generate a JSON dataset of 10 blurbs on the same topics. make it extremely similar in style to the rest of the data. 
+    
+    Here are 3 important things to keep in mind:
+    1. Use the slang and important words discovered in your generated blurbs.
+    2. Each blurb should be around 40 words (130 characters).
+    3. Don't use emojis.
 
     Here is the dataset:
     {examples}
@@ -76,7 +81,7 @@ def generate_tweet_3(examples, topics):
                             "type": "string",
                             },
                         "slang Used":{
-                            "description": "write the informal slang or swear words that are used"
+                            "description": "write the informal slang or swear words that are used. Use these words in your blurbs."
                         },
                         "topics": {  
                             "description": "write the 3 main topics the blurbs are on here.",
@@ -87,7 +92,7 @@ def generate_tweet_3(examples, topics):
                             },
 
                         "tweets": {  
-                            "description": "A list of 10 generated blurbs similar to the dataset",
+                            "description": "A list of 10 generated blurbs similar to the dataset.",
                             "type": "array",
                             "items": {
                                 "type": "string"
