@@ -27,4 +27,20 @@ def introduce_errors(tweet):
     return returntweet
 
 
+def introduce_links(tweet):
+    # 25% chance to append a link if it doesn't already exist
+    if "https://t.co/twitter_link" not in tweet and random.randint(1, 4) == 1:
+        return f"{tweet} https://t.co/twitter_link"
+    return tweet
 
+
+def introduce_mentions(tweet):
+    returntweet = tweet
+    
+    r = random.randint(1,33)
+    if (r == 1):
+        returntweet = f"{tweet} @mention"
+    elif (r == 2):
+        returntweet = f"@mention {tweet}"
+
+    return returntweet

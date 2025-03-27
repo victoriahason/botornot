@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 import json
 import random
 from api_requests import get_session_info
-from BotTemplate.BotCode.gpthelper import generate_metadata, generate_tweet_3
-from BotTemplate.BotCode.modify import introduce_errors
+from BotTemplate.BotCode.gpthelper import generate_metadata, generate_tweet_3, generate_one_tweet, generate_response
+from BotTemplate.BotCode.modify import introduce_errors, introduce_links, introduce_mentions
 
 
 #get session metadata
@@ -33,12 +33,6 @@ def pop_random_tweet(tweet_list):
 def extract_tweets(gpt_output):
     return gpt_output["tweets"]
 
-#not used
-def extract_tweets2(gpt_output):
-    match = re.search(r'FINAL TEXT:(.*)', gpt_output, re.DOTALL) 
-    return match.group(1).strip() if match else ""
-
-
 #function that generates a random time within the subsession window
 def generate_time(start, end):
         # Convert string inputs to datetime objects
@@ -59,10 +53,16 @@ def get_random_posts(posts, num_samples=35):
     num_samples = min(num_samples, len(posts))
     return [post["text"] for post in random.sample(posts, num_samples)]
 
+#this is used to get one random post
+def get_random_post(posts):
+    if not posts:
+        return []  # Return empty list if no posts available
+    return [post["text"] for post in random.sample(posts, 1)]
+
 class Bot(ABot):
 
     def create_user(self, session_info):
-        numusers = 4
+        numusers = 3
         new_users = []
 
         try: 
@@ -100,21 +100,30 @@ class Bot(ABot):
 
         for h in range(len(users_list)):
             
-            numtweets = random.randint(2,8) #fix this
+            numtweets = random.randint(2,6) #how many tweets they post per session
 
             subsession_posts_sample = get_random_posts(user_posts, 20)
             output = generate_tweet_3(subsession_posts_sample, topics)
             tweets = extract_tweets(output)
 
+            #now this is all the same person
             for _ in range(numtweets): 
-                #these are my tweets
-                tweet = pop_random_tweet(tweets)
+                randomizer = random.randint(0,1)
+
+                #you either generate a completely new tweet or you base one off of a given tweet
+                if(randomizer ==0):
+                    tweet = pop_random_tweet(tweets)
+                else:
+                    randomtweet = get_random_post(user_posts)
+                    tweet = generate_one_tweet(randomtweet)
             
                 if tweet == None: #No more tweets left
                     return []
+                
                 time = generate_time(start, end)
-
                 tweet = introduce_errors(tweet)
+                tweet = introduce_links(tweet)
+                tweet = introduce_mentions(tweet)
 
                 posts.append(NewPost(text=tweet, author_id=users_list[h].user_id, created_at=time, user=users_list[h]))
         
