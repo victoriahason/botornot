@@ -60,13 +60,13 @@ def generate_tweet_3(examples, topics):
     messages_tweets = [
     {
         "role": "developer",  
-        "content": "You are a content generation assistant that provides sample social media posts for research purposes"},
+        "content": "You are a content generator that create blurbs based off a dataset"},
     {
         "role": "user",
         "content": prompt2
     }]
     response = client.chat.completions.create(
-        model=modelid,
+        model="gpt-4o-mini",
         messages=messages_tweets,
         response_format={
             "type": "json_schema",
