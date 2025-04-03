@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import json
 import random
 from api_requests import get_session_info
-from BotTemplate.BotCode.gpthelper import generate_metadata, generate_tweet_3, generate_one_tweet, generate_response
+from BotTemplate.BotCode.gpthelper import generate_metadata, generate_tweet_3, generate_one_tweet, generate_mine
 from BotTemplate.BotCode.modify import introduce_errors, introduce_links, introduce_mentions
 
 
@@ -108,11 +108,11 @@ class Bot(ABot):
 
             #now this is all the same person
             for _ in range(numtweets): 
-                randomizer = random.randint(0,1)
+                randomizer = random.randint(0,2)
 
                 #you either generate a completely new tweet or you base one off of a given tweet
-                if(randomizer ==0):
-                    tweet = pop_random_tweet(tweets)
+                if(randomizer ==0 or randomizer ==1):
+                    tweet = generate_mine()
                 else:
                     randomtweet = get_random_post(user_posts)
                     tweet = generate_one_tweet(randomtweet)

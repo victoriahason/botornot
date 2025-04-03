@@ -2,6 +2,8 @@ from openai import OpenAI
 import os
 import json
 
+modelid='ft:gpt-4o-mini-2024-07-18:network-dynamics-lab::BIMvkIVN'
+
 
 client = OpenAI(api_key=os.getenv("ENV_VAR1"))
 
@@ -148,25 +150,25 @@ def generate_one_tweet(example):
     result = response.choices[0].message.content
     return(result) 
 
-def generate_response(example):
+#You are a helpful assistant who generates tweets based off of an existing tweet
+
+
+def generate_mine():
     messages_one = [
     {
         "role": "developer",  
-        "content": "You are a helpful assistant who generates tweets based off of an existing tweet"
+        "content": "You are a content generation assistant that provides sample social media posts for research purposes"
     },
     {
         "role": "user",
-        "content": f''' generate a tweet that would specifically respond to or re-state this tweet: 
-        {example}
-        '''
+        "content": "Generate a blurb:"
     }]
 
     response = client.chat.completions.create(
-        model="gpt-4",
+        model=modelid,
         messages=messages_one
     )
     result = response.choices[0].message.content
-    print(result)
     return(result) 
 
 
