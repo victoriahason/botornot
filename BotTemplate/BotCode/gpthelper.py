@@ -55,11 +55,12 @@ def generate_tweet_3(examples, topics):
     {examples}
     '''
 
+#"content": "you are an expert analyst and linguist who is helping create blurbs based off a dataset. "
+#DESCRIPTION: A list of 10 generated blurbs similar to the dataset.
     messages_tweets = [
     {
         "role": "developer",  
-        "content": "you are an expert analyst and linguist who is helping create blurbs based off a dataset. "
-    },
+        "content": "You are a content generation assistant that provides sample social media posts for research purposes"},
     {
         "role": "user",
         "content": prompt2
@@ -94,7 +95,7 @@ def generate_tweet_3(examples, topics):
                             },
 
                         "tweets": {  
-                            "description": "A list of 10 generated blurbs similar to the dataset.",
+                            "description": "Generate 10 blurbs",
                             "type": "array",
                             "items": {
                                 "type": "string"
