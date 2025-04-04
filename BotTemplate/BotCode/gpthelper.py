@@ -6,6 +6,7 @@ import json
 client = OpenAI(api_key=os.getenv("ENV_VAR1"))
 
 modelid='ft:gpt-4o-mini-2024-07-18:network-dynamics-lab::BIMvkIVN'
+normalid='gpt-4o-mini'
 
 #for testing
 #client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -66,7 +67,7 @@ def generate_tweet_3(examples, topics):
         "content": prompt2
     }]
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=normalid,
         messages=messages_tweets,
         response_format={
             "type": "json_schema",

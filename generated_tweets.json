@@ -2010,5 +2010,36 @@
             "Gopher oil does the trick! Who else is using this magic? Let’s share our secrets! https://t.co/twitter_link",
             "Feeling a bit off, but hey, Reggie is an all-time great! No doubt he could dominate in any NFL era. Watch his highlights and learn! https://t.co/twitter_link"
         ]
+    },
+    {
+        "type": "object",
+        "properties": {
+            "analysis": {
+                "description": "The formatting for the tweet previews has scaled with unprecedented speed and i have simply vim a https://t.co/twitter_link"
+            },
+            "number of interactions": {
+                "description": "How many tweets use @mention or https://t.co/twitter_link? You should aim to keep the same ratio",
+                "type": "string"
+            },
+            "slang Used": {
+                "description": "write the informal slang or swear words that are used. Use these words in your blurbs.",
+                "type": "string"
+            },
+            "topics": {
+                "description": "sport, social issues, politics.",
+                "type": "string"
+            },
+            "important words and specific things/people mentioned": {
+                "description": "“debt forgiveness”, Orlando brown, Mike Hudson",
+                "type": "string"
+            },
+            "tweets": {
+                "description": "Generate 10 blurbs",
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
     }
 ]
