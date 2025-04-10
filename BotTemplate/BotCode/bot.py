@@ -108,22 +108,16 @@ class Bot(ABot):
 
             #now this is all the same person
             for _ in range(numtweets): 
-                randomizer = random.randint(0,2)
 
-                #you either generate a completely new tweet or you base one off of a given tweet
-                if(randomizer ==0 or randomizer ==1):
-                    tweet = generate_mine()
-                else:
-                    randomtweet = get_random_post(user_posts)
-                    tweet = generate_one_tweet(randomtweet)
+                tweet = generate_mine()
             
                 if tweet == None: #No more tweets left
                     return []
                 
                 time = generate_time(start, end)
-                tweet = introduce_errors(tweet)
-                tweet = introduce_links(tweet)
-                tweet = introduce_mentions(tweet)
+                #tweet = introduce_errors(tweet)
+                #tweet = introduce_links(tweet)
+                #tweet = introduce_mentions(tweet)
 
                 posts.append(NewPost(text=tweet, author_id=users_list[h].user_id, created_at=time, user=users_list[h]))
         
