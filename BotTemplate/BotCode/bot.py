@@ -109,7 +109,7 @@ class Bot(ABot):
             #now this is all the same person
             for _ in range(numtweets): 
 
-                tweet = generate_mine()
+                tweet = generate_mine(tweets)
             
                 if tweet == None: #No more tweets left
                     return []
