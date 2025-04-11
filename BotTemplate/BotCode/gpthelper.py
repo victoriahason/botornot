@@ -170,6 +170,7 @@ def generate_mine(tweets):
     )
     result = response.choices[0].message.content
     #print(result) 
+    return result
 
 
 
