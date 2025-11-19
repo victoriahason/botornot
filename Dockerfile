@@ -2,6 +2,10 @@ FROM python:3
 
 RUN pip install requests
 RUN pip install pydantic
+RUN pip install openai
+RUN pip install typo
+#RUN pip install re
+#RUN pip install random
 
 #Important so we will have access to the run.sh file 
 COPY . . 
