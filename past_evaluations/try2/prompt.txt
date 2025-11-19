@@ -1,0 +1,15 @@
+ Return a JSON file of 20 tweets based off of this dataset:
+
+    {examples}
+
+    Use the language and syntax of the provided data to generate your tweets. Base your tweets off of this dataset.
+    
+    Use links or mentions every 5th tweet. No links, use ‘https://t.co/twitter link’ instead. No mentions, use ‘@mention’ instead.
+   
+    Write your tweets on the following topics: {topics}
+
+
+Chat's reviews:
+
+FPR = 0 (no false positives)
+TPR = 17/20 = 85%

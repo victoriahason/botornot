@@ -1,0 +1,9 @@
+ Return a JSON file of 30 blurbs based off of this dataset:
+
+    {examples}
+
+Use the language and topics of the provided data to generate your burbs.
+   
+Write your blurbs on the following topics: 
+    
+    {topics}
